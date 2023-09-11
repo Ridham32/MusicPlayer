@@ -3,12 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Playlist_Fragment">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/tvPlaylist"
+    android:text="My Playlist"
+    android:textAlignment="center"
+    android:textSize="40dp"
+    android:textStyle="bold"
+    />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycler"/>
+        android:layout_height="match_parent"
+        tools:itemCount="4"
+        tools:listitem="@layout/recyclerlistview"
+        android:id="@+id/recycler"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"/>
 
 
 
