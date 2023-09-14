@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
@@ -24,9 +25,11 @@ class MainActivity : AppCompatActivity() {
     var currentPlayingPosition = 0
     var permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (it) {
-            //getSongs
             getSongs()
         } else {
+            var dialog =  AlertDialog.Builder(this)
+                .setTitle("Permission not Granted")
+                .setMessage("Allow MusicPlayer to Access Local Storage..... go to settings")
             //alert.. cannot run app without permission
             //option pop-up ->> go to setting
             //exit finish
@@ -80,6 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     //populate list use getSong fun
     fun getSongs() {
+        musicList.clear()
         var uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val selection = MediaStore.Audio.Media.IS_MUSIC
         val cursor: Cursor? = contentResolver?.query(uri, null, selection, null, null)

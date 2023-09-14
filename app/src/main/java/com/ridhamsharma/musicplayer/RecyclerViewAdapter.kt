@@ -31,9 +31,9 @@ class RecyclerViewAdapter( var musicClick: MusicClick): RecyclerView.Adapter<Rec
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvMusicName.setText(musicContent[position].title)
         //holder.musicClick= musicClick
-        holder.view.setOnClickListener {
+       /* holder.view.setOnClickListener {
             musicClick.onSongPlayClick(musicContent[position])
-        }
+        }*/
     }
 
     fun updateList( musicContent: ArrayList<MusicContent>){

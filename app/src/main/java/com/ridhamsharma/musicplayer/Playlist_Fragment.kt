@@ -1,5 +1,6 @@
 package com.ridhamsharma.musicplayer
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,7 +55,6 @@ class Playlist_Fragment : Fragment() , MusicClick{
         adapter = RecyclerViewAdapter(this)
         binding.recycler.adapter = adapter
         musicViewModel = ViewModelProvider(mainActivity)[MusicViewModel::class.java]
-
         musicViewModel.musicContentList.observe(mainActivity){
             adapter.updateList(it)
         }
@@ -83,5 +83,15 @@ class Playlist_Fragment : Fragment() , MusicClick{
     }
 
     override fun onSongPlayClick(musicContent: MusicContent) {
+        System.out.println("music on")
+        if(mainActivity.mediaPlayer.isPlaying){
+            mainActivity.mediaPlayer.stop()
+            mainActivity.mediaPlayer.reset()
+        } else{
+            mainActivity.mediaPlayer.setDataSource(mainActivity, Uri.parse(musicContent.storageLocation))
+            mainActivity.mediaPlayer.prepare()
+            mainActivity.mediaPlayer.start()
+
+        }
     }
 }
