@@ -19,10 +19,11 @@ import com.ridhamsharma.musicplayer.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var navController: NavController
+    lateinit var musicContent: MusicContent
     var musicList = ArrayList<MusicContent>()
     lateinit var musicViewModel: MusicViewModel
+    var position = -1
     var mediaPlayer: MediaPlayer = MediaPlayer()
-    var currentPlayingPosition = 0
     var permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (it) {
             getSongs()

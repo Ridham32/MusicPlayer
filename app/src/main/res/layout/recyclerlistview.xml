@@ -2,18 +2,13 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-        <variable
-            name="playMusic"
-            type="com.ridhamsharma.musicplayer.MusicViewModel" />
-    </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <TextView
-    android:layout_width="match_parent"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:id="@+id/tvMusicName"
     android:hint="Music Name"
@@ -21,10 +16,20 @@
     android:drawablePadding="10dp"
     android:background="#4165AE"
     android:padding="10dp"
-    android:onClick="@{()-> playMusic.}"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/btnPlayMusic"
     />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnPlayMusic"
+        android:background="#1AE3BA"
+        android:src="@drawable/ic_play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ridhamsharma.musicplayer.databinding.ActivityMainBinding
 import com.ridhamsharma.musicplayer.databinding.FragmentPlaylistBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class Playlist_Fragment : Fragment() , MusicClick{
     lateinit var layoutManager: LinearLayoutManager
-    lateinit var binding: FragmentPlaylistBinding
+     lateinit var binding : FragmentPlaylistBinding
     lateinit var musicViewModel: MusicViewModel
     lateinit var mainActivity: MainActivity
     lateinit var adapter: RecyclerViewAdapter
@@ -82,16 +83,10 @@ class Playlist_Fragment : Fragment() , MusicClick{
             }
     }
 
-    override fun onSongPlayClick(musicContent: MusicContent) {
-        System.out.println("music on")
-        if(mainActivity.mediaPlayer.isPlaying){
-            mainActivity.mediaPlayer.stop()
-            mainActivity.mediaPlayer.reset()
-        } else{
-            mainActivity.mediaPlayer.setDataSource(mainActivity, Uri.parse(musicContent.storageLocation))
-            mainActivity.mediaPlayer.prepare()
-            mainActivity.mediaPlayer.start()
+    override fun onSongPlayClick(musicContent: MusicContent, position: Int) {
 
-        }
+        findNavController().navigate(R.id.action_playlist_Fragment_to_playMusic_Fragment, bundleOf("position" to position))
     }
+
+
 }

@@ -13,7 +13,7 @@
         android:id="@+id/fragment_playlist"
         android:name="com.ridhamsharma.musicplayer.Playlist_Fragment"
         android:label="fragment_playlist_"
-        tools:layout="@layout/fragment_playlist_" >
+        tools:layout="@layout/fragment_playlist" >
         <action
             android:id="@+id/action_playlist_Fragment_to_playMusic_Fragment"
             app:destination="@id/fragment_playMusic" />

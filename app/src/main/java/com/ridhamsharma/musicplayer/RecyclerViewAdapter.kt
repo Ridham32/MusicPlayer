@@ -3,18 +3,22 @@ package com.ridhamsharma.musicplayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
 interface MusicClick{
-    fun onSongPlayClick(musicContent: MusicContent)
+    fun onSongPlayClick(musicContent: MusicContent, position: Int)
 }
 
 class RecyclerViewAdapter( var musicClick: MusicClick): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
     var musicContent: ArrayList<MusicContent> = arrayListOf()
-    class ViewHolder(var view : View):RecyclerView.ViewHolder(view) {
+    lateinit var musicClick1: MusicClick
+
+    class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
         var tvMusicName = view.findViewById<TextView>(R.id.tvMusicName)
+        var btnPlayMusic = view.findViewById<ImageView>(R.id.btnPlayMusic)
 
 
     }
@@ -30,10 +34,14 @@ class RecyclerViewAdapter( var musicClick: MusicClick): RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvMusicName.setText(musicContent[position].title)
-        //holder.musicClick= musicClick
-       /* holder.view.setOnClickListener {
-            musicClick.onSongPlayClick(musicContent[position])
-        }*/
+        musicClick1 = musicClick
+        holder.itemView.setOnClickListener {
+            musicClick1.onSongPlayClick(musicContent[position], position)
+        }
+
+
+
+
     }
 
     fun updateList( musicContent: ArrayList<MusicContent>){
