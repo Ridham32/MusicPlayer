@@ -18,7 +18,7 @@ class RecyclerViewAdapter( var musicClick: MusicClick): RecyclerView.Adapter<Rec
 
     class ViewHolder(view : View):RecyclerView.ViewHolder(view) {
         var tvMusicName = view.findViewById<TextView>(R.id.tvMusicName)
-        var btnPlayMusic = view.findViewById<ImageView>(R.id.btnPlayMusic)
+       // var btnPlayMusic = view.findViewById<ImageView>(R.id.btnPlayMusic)
 
 
     }

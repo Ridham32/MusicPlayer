@@ -6,6 +6,7 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -30,7 +31,17 @@ class MainActivity : AppCompatActivity() {
         } else {
             var dialog =  AlertDialog.Builder(this)
                 .setTitle("Permission not Granted")
+                .setCancelable(false)
                 .setMessage("Allow MusicPlayer to Access Local Storage..... go to settings")
+                .setPositiveButton("OK") { _, _ ->
+                    Toast.makeText(this, "Clicked ok", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancel"){_,_ ->
+                    Toast.makeText(this, "Clicked Cancel", Toast.LENGTH_SHORT).show()
+
+                }
+            dialog.show()
+
             //alert.. cannot run app without permission
             //option pop-up ->> go to setting
             //exit finish
@@ -90,8 +101,8 @@ class MainActivity : AppCompatActivity() {
         val cursor: Cursor? = contentResolver?.query(uri, null, selection, null, null)
         // take cursor to data
         if (cursor != null) {
-            if (cursor?.moveToFirst() == true) {
-                while (cursor?.isLast == false) {
+            if (cursor.moveToFirst() == true) {
+                while (cursor.isLast == false) {
                     musicList.add(
                         MusicContent(
                             title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),

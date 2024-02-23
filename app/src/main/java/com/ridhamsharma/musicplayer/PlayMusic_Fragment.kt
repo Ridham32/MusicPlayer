@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.ridhamsharma.musicplayer.databinding.FragmentPlayMusicBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
 class PlayMusic_Fragment : Fragment() {
     lateinit var binding : FragmentPlayMusicBinding
     lateinit var mainActivity: MainActivity
-    lateinit var musicViewModel: MusicViewModel
+     var indexCount :Int = 0
     private var param1: String? = null
     private var param2: String? = null
 
@@ -46,9 +47,51 @@ class PlayMusic_Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(mainActivity.position >-1){
-            PlaySong()
-        }
+        PlaySong()
+       binding.btnForward.setOnClickListener {
+           if(indexCount == mainActivity.musicList.size -1){
+               indexCount = 0
+               mainActivity.mediaPlayer.stop()
+               mainActivity.mediaPlayer.reset()
+               mainActivity.musicContent = mainActivity.musicList[indexCount]
+               mainActivity.mediaPlayer.setDataSource(mainActivity.musicList[indexCount].storageLocation)
+               mainActivity.mediaPlayer.prepare()
+               mainActivity.mediaPlayer.start()
+               binding.tvChoosenSongName.setText(mainActivity.musicList[indexCount].title)
+           } else{
+               indexCount++
+               mainActivity.mediaPlayer.stop()
+               mainActivity.mediaPlayer.reset()
+               mainActivity.musicContent = mainActivity.musicList[indexCount]
+               mainActivity.mediaPlayer.setDataSource(mainActivity.musicList[indexCount].storageLocation)
+               mainActivity.mediaPlayer.prepare()
+               mainActivity.mediaPlayer.start()
+               binding.tvChoosenSongName.setText(mainActivity.musicList[indexCount].title)
+
+           }
+           binding.btnBackward.setOnClickListener {
+               if(indexCount == 0){
+                   indexCount = mainActivity.musicList.size -1
+                   mainActivity.mediaPlayer.stop()
+                   mainActivity.mediaPlayer.reset()
+                   mainActivity.musicContent = mainActivity.musicList[indexCount]
+                   mainActivity.mediaPlayer.setDataSource(mainActivity.musicList[indexCount].storageLocation)
+                   mainActivity.mediaPlayer.prepare()
+                   mainActivity.mediaPlayer.start()
+                   binding.tvChoosenSongName.setText(mainActivity.musicList[indexCount].title)
+
+               } else{
+                   indexCount--
+                   mainActivity.mediaPlayer.stop()
+                   mainActivity.mediaPlayer.reset()
+                   mainActivity.musicContent = mainActivity.musicList[indexCount]
+                   mainActivity.mediaPlayer.setDataSource(mainActivity.musicList[indexCount].storageLocation)
+                   mainActivity.mediaPlayer.prepare()
+                   mainActivity.mediaPlayer.start()
+                   binding.tvChoosenSongName.setText(mainActivity.musicList[indexCount].title)
+               }
+           }
+       }
     }
 
     companion object {
@@ -72,13 +115,10 @@ class PlayMusic_Fragment : Fragment() {
     }
     fun PlaySong(){
         System.out.println("music on")
-        binding.tvChoosenSongName.setText(mainActivity.musicList[mainActivity.position].title)
         if(mainActivity.mediaPlayer.isPlaying){
-            mainActivity.mediaPlayer.stop()
-            mainActivity.mediaPlayer.reset()
+            binding.tvChoosenSongName.setText(mainActivity.musicContent.title)
+            mainActivity.mediaPlayer.pause()
         } else{
-            mainActivity.mediaPlayer.setDataSource(mainActivity, Uri.parse(mainActivity.musicList[mainActivity.position].storageLocation))
-            mainActivity.mediaPlayer.prepare()
             mainActivity.mediaPlayer.start()
 
         }

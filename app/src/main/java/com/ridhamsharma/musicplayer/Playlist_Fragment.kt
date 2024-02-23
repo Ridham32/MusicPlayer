@@ -6,9 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ridhamsharma.musicplayer.databinding.FragmentPlaylistBinding
 
@@ -84,8 +82,17 @@ class Playlist_Fragment : Fragment() , MusicClick{
     }
 
     override fun onSongPlayClick(musicContent: MusicContent, position: Int) {
+        mainActivity.musicContent = musicContent
+       //findNavController().navigate(R.id.action_playlist_Fragment_to_playMusic_Fragment, bundleOf("position" to position))
+        if(mainActivity.mediaPlayer.isPlaying){
+            mainActivity.mediaPlayer.stop()
+            mainActivity.mediaPlayer.reset()
+        } else{
+            mainActivity.mediaPlayer.setDataSource(mainActivity, Uri.parse(musicContent.storageLocation))
+            mainActivity.mediaPlayer.prepare()
+            mainActivity.mediaPlayer.start()
 
-        findNavController().navigate(R.id.action_playlist_Fragment_to_playMusic_Fragment, bundleOf("position" to position))
+        }
     }
 
 
